@@ -1,0 +1,24 @@
+--- a/aten/src/ATen/CMakeLists.txt
++++ b/aten/src/ATen/CMakeLists.txt
+@@ -253,7 +253,7 @@
+ file(GLOB mem_eff_attention_cuda_kernels_cu "native/transformers/cuda/mem_eff_attention/kernels/*.cu")
+ file(GLOB mem_eff_attention_cuda_cpp "native/transformers/cuda/mem_eff_attention/*.cpp")
+
+-if(USE_CUDA AND (USE_FLASH_ATTENTION OR USE_MEM_EFF_ATTENTION))
++if((USE_CUDA OR (USE_ROCM AND (UNIX OR WIN32))) AND (USE_FLASH_ATTENTION OR USE_MEM_EFF_ATTENTION))
+   add_library(flash_attention OBJECT EXCLUDE_FROM_ALL ${flash_attention_cuda_kernels_cu} ${flash_attention_cuda_cpp})
+
+   target_include_directories(flash_attention PUBLIC
+@@ -404,11 +404,6 @@
+     ${native_quantized_hip_hip}
+     ${native_transformers_hip_hip} ${native_transformers_src_hip_hip}
+   )
+-  if(WIN32) # Windows doesn't support Composable Kernels
+-    file(GLOB native_hip_bgemm "native/hip/bgemm_kernels/*.hip")
+-    file(GLOB native_hip_ck "native/hip/ck*.hip")
+-    exclude(ATen_HIP_SRCS "${ATen_HIP_SRCS}"
+-      ${native_hip_bgemm} ${native_hip_ck})
+-  endif()
+   # TODO: Codegen separate files for HIP and use those (s/cuda_generated_sources/hip_generated_sources)
+   list(APPEND all_hip_cpp
+     ${native_nested_hip_cpp}

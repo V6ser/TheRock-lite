@@ -1,0 +1,12 @@
+--- a/c10/core/impl/GPUTrace.h
++++ b/c10/core/impl/GPUTrace.h
+@@ -1,5 +1,9 @@
+ #pragma once
+
++#ifdef _WIN32
++#include <windows.h>
++#endif
++
+ #include <c10/core/Device.h>
+ #include <c10/core/Stream.h>
+ #include <c10/util/approx_time.h>

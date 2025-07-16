@@ -46,7 +46,7 @@ export USE_ROCM=ON
 export USE_KINETO=0
 export BUILD_TEST=0
 export USE_FLASH_ATTENTION=1
-export USE_MEM_EFF_ATTENTION=1
+export USE_MEM_EFF_ATTENTION=0
 export CMAKE_PREFIX_PATH="${ROCM_HOME?}"
 # TODO(#410): Fix HIP_CLANG_PATH setting so hipcc finds the tools on its own
 export HIP_CLANG_PATH="${ROCM_HOME?}/lib/llvm/bin"
